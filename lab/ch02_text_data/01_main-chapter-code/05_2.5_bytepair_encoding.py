@@ -22,6 +22,8 @@ text = (
      "of someunknownPlace."
 )
 
+print("Use of BPE tokenizer. The text are:\n", text)
+
 # - BPE tokenizers break down unknown words into subwords and individual characters:
 integers = tokenizer.encode(text, allowed_special={"<|endoftext|>"})    
 print("Enconde, list of ids: ", integers)
