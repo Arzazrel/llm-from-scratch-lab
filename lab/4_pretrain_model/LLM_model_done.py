@@ -1,3 +1,4 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 # Coding an LLM architecture (merge the previous implementation to create the base block for the LLM architecture, the trasformer one)
 
 import tiktoken
