@@ -186,9 +186,8 @@ if __name__ == "__main__":
     }
 
     print("The settings for the training are: ", GPT_CONFIG_124M, OTHER_SETTINGS)
-    print("Start training: ")
-    # training
-    train_losses, val_losses, tokens_seen, model = main(GPT_CONFIG_124M, OTHER_SETTINGS)
+    print("Start training: ") 
+    train_losses, val_losses, tokens_seen, model = main(GPT_CONFIG_124M, OTHER_SETTINGS)    # training
 
     print("Plots the results after training.")
     # Plot results
