@@ -286,7 +286,7 @@ def save_model():
     print("Save the model with name: spam_classifier.pth")
 
 # function to load a saved model
-def load_model(name, device):
+def load_model(name, model, device):
     model_state_dict = torch.load(name, map_location=device)
     model.load_state_dict(model_state_dict)
     return model
