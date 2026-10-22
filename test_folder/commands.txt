@@ -1,0 +1,116 @@
+============================================================================
+ commands.txt
+ Ready-made bash commands for train_model.py and test_model.py.
+ Run them from inside the 'test/' folder.
+ All training commands use --non_interactive so they run without prompts;
+ remove that flag if you prefer to be asked interactively.
+ Sizes: small | medium | large | XL
+============================================================================
+
+----------------------------------------------------------------------------
+ 0) One-time setup (from the repository root or wherever you keep the env)
+----------------------------------------------------------------------------
+# Needed packages (GPU build of torch recommended, on WSL + RTX):
+pip install torch tiktoken tensorflow numpy pandas tqdm matplotlib
+
+# Note: text generation / instruction need the GPT-2 weights, which are
+# downloaded automatically the first time into the 'gpt2/' folder.
+# The datasets (SMS spam, IMDB, instruction json) are also downloaded on demand.
+
+
+============================================================================
+ TRAIN_MODEL.PY
+============================================================================
+
+----------------------------------------------------------------------------
+ 1) Simple text generation  (task: gen)  -> gen_<size>.pth
+    No training: downloads weights, loads them, saves the model.
+----------------------------------------------------------------------------
+python train_model.py --task gen --size small  --non_interactive
+python train_model.py --task gen --size medium --non_interactive
+python train_model.py --task gen --size large  --non_interactive
+python train_model.py --task gen --size XL     --non_interactive
+
+----------------------------------------------------------------------------
+ 2) Advanced text generation (task: adv_gen) -> adv_gen_t<temp>_k<k>_<size>.pth
+    Same weights as 'gen', saved under a name that encodes the preset.
+    --temperature and --top_k set the values embedded in the file name.
+----------------------------------------------------------------------------
+# default preset (temperature 1.0, top-k 5)
+python train_model.py --task adv_gen --size small --temperature 1.0 --top_k 5 --non_interactive
+
+# more creative (higher temperature), small window of candidates
+python train_model.py --task adv_gen --size small --temperature 1.5 --top_k 5 --non_interactive
+
+# more conservative (lower temperature)
+python train_model.py --task adv_gen --size medium --temperature 0.7 --top_k 3 --non_interactive
+
+# other sizes, default preset
+python train_model.py --task adv_gen --size large --temperature 1.0 --top_k 5 --non_interactive
+python train_model.py --task adv_gen --size XL    --temperature 1.0 --top_k 5 --non_interactive
+
+----------------------------------------------------------------------------
+ 3) Spam classification (task: spam_cls) -> spam_cls_<size>.pth
+    --epochs           : training epochs (default 5)
+    --trainable_blocks : how many last transformer blocks to unfreeze
+                         0 = only the new classification head (+ final norm)
+                         1 = also the last transformer block (lab default)
+                         N = the last N blocks
+----------------------------------------------------------------------------
+# lab-equivalent default (last block unfrozen)
+python train_model.py --task spam_cls --size small --epochs 5 --trainable_blocks 1 --non_interactive
+
+# only the classification head is trained (fastest, lowest accuracy)
+python train_model.py --task spam_cls --size small --epochs 5 --trainable_blocks 0 --non_interactive
+
+# unfreeze the last two blocks (slower, potentially better)
+python train_model.py --task spam_cls --size small --epochs 5 --trainable_blocks 2 --non_interactive
+
+# bigger backbone
+python train_model.py --task spam_cls --size medium --epochs 5 --trainable_blocks 1 --non_interactive
+
+----------------------------------------------------------------------------
+ 4) Sentiment analysis (task: sent_cls) -> sent_cls_<size>.pth
+    Same options as spam_cls. IMDB dataset is large: first run downloads it.
+----------------------------------------------------------------------------
+python train_model.py --task sent_cls --size small  --epochs 5 --trainable_blocks 1 --non_interactive
+python train_model.py --task sent_cls --size small  --epochs 5 --trainable_blocks 0 --non_interactive
+python train_model.py --task sent_cls --size medium --epochs 5 --trainable_blocks 2 --non_interactive
+
+----------------------------------------------------------------------------
+ 5) Instruction following (task: instr) -> instr_<size>.pth
+    --epochs           : training epochs (default 2)
+    --mask_instruction : if present, the loss is computed on the response only
+                         (the instruction/input tokens are masked out)
+----------------------------------------------------------------------------
+# lab-equivalent default (no instruction masking, 2 epochs)
+python train_model.py --task instr --size small --epochs 2 --non_interactive
+
+# train on the response only (instruction masked)
+python train_model.py --task instr --size small --epochs 2 --mask_instruction --non_interactive
+
+# bigger backbone (the book uses gpt2-medium for this task)
+python train_model.py --task instr --size medium --epochs 2 --non_interactive
+python train_model.py --task instr --size medium --epochs 2 --mask_instruction --non_interactive
+
+
+============================================================================
+ TEST_MODEL.PY
+============================================================================
+ test_model.py is fully interactive: it asks the functionality, the decoding
+ parameters (for generation), and the size, then loads the matching model and
+ lets you enter inputs in a loop. Just run:
+
+python test_model.py
+
+ It will look for the trained model whose name matches your choices inside
+ 'trained_model/'. If it is not there, it prints an error, lists the models
+ that ARE available, and exits. So train the corresponding model first with
+ the commands above.
+
+ Quick correspondence (functionality chosen -> file it will look for):
+   1) Simple text generation            -> gen_<size>.pth
+   2) Generation temperature + top-k    -> adv_gen_t<temp>_k<k>_<size>.pth
+   3) Spam classification               -> spam_cls_<size>.pth
+   4) Sentiment analysis                -> sent_cls_<size>.pth
+   5) Instruction following             -> instr_<size>.pth
