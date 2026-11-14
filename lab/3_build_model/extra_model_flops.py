@@ -1,3 +1,4 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 # FLOPS Analysis
 # - FLOPs (Floating Point Operations Per Second) measure the computational complexity of neural network models by counting the number of floating-point operations executed
 # - High FLOPs indicate more intensive computation and energy consumption

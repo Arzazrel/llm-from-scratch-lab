@@ -1,3 +1,4 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 # shortcut example to see the vanishing gradient problem
 
 import torch
