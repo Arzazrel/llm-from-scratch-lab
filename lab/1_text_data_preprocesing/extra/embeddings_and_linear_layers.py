@@ -1,4 +1,5 @@
 """
+Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 Capitolo 2 - BONUS: Embedding layer vs Linear layer nn.Embedding equivale a matmul con one-hot encoding.
 """
 

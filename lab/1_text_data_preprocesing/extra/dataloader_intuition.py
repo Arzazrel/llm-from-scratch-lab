@@ -1,6 +1,7 @@
 """
 Capitolo 2 - BONUS: intuizione sul DataLoader con dati numerici
 Sliding window su sequenza di numeri per capire input/target.
+Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 """
 
 import importlib

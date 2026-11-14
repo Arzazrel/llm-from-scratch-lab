@@ -1,4 +1,4 @@
-# file to test spam classification training with user's input
+# file to test sentiment classification training with user's input
 
 import tiktoken
 import torch
