@@ -1,3 +1,4 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
 import torch
 
 # 3.3 Attending to different parts of the input with self-attention

@@ -1,3 +1,5 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
+
 import torch
 import torch.nn as nn
 
@@ -93,7 +95,7 @@ class MultiHeadAttention(nn.Module):
         
         self.W_query = nn.Linear(d_in, d_out, bias=qkv_bias)    # query matrix
         self.W_key   = nn.Linear(d_in, d_out, bias=qkv_bias)    # key matrix
-        self.W_value = nn.Linear(d_in, d_out, bias=qkv_bias)    # value matrixù
+        self.W_value = nn.Linear(d_in, d_out, bias=qkv_bias)    # value matrix
         self.out_proj = nn.Linear(d_out, d_out)                 # Linear layer to combine head outputs (from more head to 1 embedding vector)
         self.dropout = nn.Dropout(dropout)                      # Drop-out layer against overfitting
         # add a register buffer, is not mandatory but useful for training
@@ -148,5 +150,5 @@ print("Context vector shape: ", context_vecs.shape)
 
 """
 NOTE:
-    # there is a compact and efficient implementation of the above -> [`torch.nn.MultiheadAttention`](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) class in PyTorch
+    there is a compact and efficient implementation of the above -> [`torch.nn.MultiheadAttention`](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) class in PyTorch
 """

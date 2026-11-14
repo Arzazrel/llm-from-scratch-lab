@@ -1,3 +1,5 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
+
 import torch
 import torch.nn as nn
 
@@ -41,8 +43,6 @@ class SelfAttention_v1(nn.Module):
 torch.manual_seed(123)
 sa_v1 = SelfAttention_v1(d_in, d_out)
 print("\nContext vector using nn.Parameter: ", sa_v1(inputs))
-
-
 
 # - We can streamline the implementation above using PyTorch's Linear layers, which are equivalent to a matrix multiplication if we disable the bias units
 class SelfAttention_v2(nn.Module):

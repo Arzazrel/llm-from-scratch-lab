@@ -1,3 +1,5 @@
+# Adapted from Sebastian Raschka, "Build a Large Language Model (From Scratch)", Apache 2.0. Modified for personal study.
+
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
